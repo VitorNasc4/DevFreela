@@ -1,0 +1,19 @@
+version: '3.5'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: DevFreela-db
+    restart: always
+    hostname: localhost
+    environment:
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=DevFreela
+    ports:
+      - 5432:5432
+    volumes:
+      - DevFreela-db:/var/lib/postgresql/data
+
+volumes:
+  DevFreela-db:
