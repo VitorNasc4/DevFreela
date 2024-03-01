@@ -1,5 +1,7 @@
 using DevFreela.Application.Commands.CreateProject;
+using DevFreela.Core.Repositories;
 using DevFreela.Infrastructure.Persistence;
+using DevFreela.Infrastructure.Persistence.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -21,8 +23,11 @@ var connectionString = builder.Configuration.GetConnectionString("DevFreelaCsPos
 builder.Services.AddDbContext<DevFreelaDbContext>
     (option => option.UseNpgsql(connectionString));
 
-
+// Injeções de dependências
 builder.Services.AddMediatR(typeof(CreateProjectCommand));
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddControllers();
 
