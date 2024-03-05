@@ -17,6 +17,12 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
             _dbContext = dbContext;
         }
 
+        public Task<User> GetUserByEmailAndPasswordAsyn(string email, string passwordHash)
+        {
+            return _dbContext.Users
+                .SingleOrDefaultAsync(u => u.Email == email && u.Password == passwordHash);
+        }
+
         public async Task<User> GetUserByIdAsync(int id)
         {
             var user = await _dbContext.Users
