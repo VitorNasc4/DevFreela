@@ -35,7 +35,7 @@ namespace DevFreela.Core.Entities
 
         public void Cancel()
         {
-            if (Status == ProjectStatusEnum.InProgress || Status == ProjectStatusEnum.InProgress)
+            if (Status == ProjectStatusEnum.InProgress || Status == ProjectStatusEnum.Created)
             {
                 Status = ProjectStatusEnum.Cancelled;
             }
