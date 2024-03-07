@@ -15,7 +15,7 @@ namespace DevFreela.Test.Mocks
                 .CustomInstantiator(f => new User(
                     f.Person.FullName,
                     f.Internet.Email(),
-                    f.Date.Past(30, DateTime.Now.AddYears(-18)),
+                    f.Date.Past(30, DateTime.UtcNow.AddYears(-18)),
                     f.Internet.Password(),
                     "client"
                 ));
@@ -29,7 +29,7 @@ namespace DevFreela.Test.Mocks
                 .CustomInstantiator(f => new User(
                     f.Person.FullName,
                     f.Internet.Email(),
-                    f.Date.Past(30, DateTime.Now.AddYears(-18)),
+                    f.Date.Past(30, DateTime.UtcNow.AddYears(-18)),
                     f.Internet.Password(),
                     "freelancer"
                 ));

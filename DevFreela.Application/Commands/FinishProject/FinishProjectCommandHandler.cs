@@ -29,7 +29,7 @@ namespace DevFreela.Application.Commands.FinishProject
 
             var paymentInfo = new PaymentInfoDTO(request.Id, request.CreditCardNumber, request.Cvv, request.ExpiresAt, request.FullName);
 
-            var result = await _paymentService.Process(paymentInfo);
+            var result = await _paymentService.ProcessPayment(paymentInfo);
             if (!result)
             {
                 project.SetPaymentPending();

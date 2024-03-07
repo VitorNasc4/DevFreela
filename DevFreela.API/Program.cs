@@ -42,6 +42,9 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 
+// Ajustando HttpClient
+builder.Services.AddHttpClient();
+
 builder.Services.AddControllers(options => options.Filters.Add(typeof(ValidationFilters)));
 
 // Fluent Validator

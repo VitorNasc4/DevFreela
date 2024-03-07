@@ -54,7 +54,7 @@ namespace DevFreela.Infrastructure.AuthServices
             var token = new JwtSecurityToken(
                 issuer: issuer,
                 audience: audience,
-                expires: DateTime.Now.AddHours(8),
+                expires: DateTime.UtcNow.AddHours(8),
                 signingCredentials: credentials,
                 claims: claims
             );

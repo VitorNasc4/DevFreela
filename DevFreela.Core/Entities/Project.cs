@@ -46,7 +46,7 @@ namespace DevFreela.Core.Entities
             if (Status == ProjectStatusEnum.Created)
             {
                 Status = ProjectStatusEnum.InProgress;
-                StartedAt = DateTime.Now;
+                StartedAt = DateTime.UtcNow;
             }
         }
 
@@ -55,7 +55,7 @@ namespace DevFreela.Core.Entities
             if (Status == ProjectStatusEnum.InProgress)
             {
                 Status = ProjectStatusEnum.Finished;
-                FinishedAt = DateTime.Now;
+                FinishedAt = DateTime.UtcNow;
             }
         }
         public void SetPaymentPending()
@@ -63,7 +63,6 @@ namespace DevFreela.Core.Entities
             if (Status == ProjectStatusEnum.Finished)
             {
                 Status = ProjectStatusEnum.PaymentPending;
-                FinishedAt = DateTime.Now;
             }
         }
 
