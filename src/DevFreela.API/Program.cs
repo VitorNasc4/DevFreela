@@ -1,3 +1,4 @@
+using System;
 using System.Configuration;
 using System.Text;
 using DevFreela.API.Filters;
@@ -109,11 +110,18 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 // Aplica as migrations automaticamente ao iniciar a aplicação
-// using (var scope = app.Services.CreateScope())
-// {
-//     var dbContext = scope.ServiceProvider.GetRequiredService<DevFreelaDbContext>();
-//     dbContext.Database.Migrate();
-// }
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<DevFreelaDbContext>();
+    try
+    {
+        dbContext.Database.Migrate();
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e);
+    }
+}
 
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DevFreela.API v1"));

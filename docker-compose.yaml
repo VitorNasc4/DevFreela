@@ -10,11 +10,11 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_DB=DevFreela
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - DevFreela-db:/var/lib/postgresql/data
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U admin -d rinha" ]
+      test: [ "CMD-SHELL", "pg_isready -U admin -d DevFreela" ]
       interval: 10s
       timeout: 5s
       retries: 3
@@ -24,11 +24,8 @@ services:
     container_name: DevFreela-rabbitmq
     restart: always
     ports:
-      - 5672:5672
-      - 15672:15672
-    environment:
-      - RABBITMQ_DEFAULT_USER=guest
-      - RABBITMQ_DEFAULT_PASS=guest
+      - "5672:5672"
+      - "15672:15672"
     volumes:
       - DevFreela-rabbitmq:/var/lib/rabbitmq
     healthcheck:
@@ -36,31 +33,40 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-      start_period: 40s
+      start_period: 80s
 
   api:
     build:
       context: .
-      dockerfile: ./DevFreela.API/Dockerfile
+      dockerfile: ./src/DevFreela.API/Dockerfile
+    image: api:dev
     container_name: DevFreela-api
     depends_on:
       db:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
     ports:
       - "5000:5000"
 
   payments:
     build:
       context: .
-      dockerfile: ./DevFreela.Messaging/Dockerfile
+      dockerfile: ./src/DevFreela.Messaging/Dockerfile
+    image: payments:dev
     container_name: DevFreela-payments
     depends_on:
       rabbitmq:
         condition: service_healthy
     ports:
       - "6000:6000"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:6000/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
 volumes:
   DevFreela-db:
