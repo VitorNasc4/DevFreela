@@ -1,11 +1,13 @@
 using System.Configuration;
 using System.Text;
 using DevFreela.API.Filters;
+using DevFreela.Application.Commands;
 using DevFreela.Application.Commands.CreateProject;
 using DevFreela.Application.Validators;
 using DevFreela.Core.Repositories;
 using DevFreela.Core.Services;
 using DevFreela.Infrastructure.AuthServices;
+using DevFreela.Infrastructure.MessageBus;
 using DevFreela.Infrastructure.PaymentServices;
 using DevFreela.Infrastructure.Persistence;
 using DevFreela.Infrastructure.Persistence.Repositories;
@@ -41,9 +43,12 @@ builder.Services.AddScoped<ISkillRepository, SkillRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IMessageBusService, MessageBusService>();
+builder.Services.AddHostedService<PaymentApprovedConsumer>();
 
 // Ajustando HttpClient
 builder.Services.AddHttpClient();
+
 
 builder.Services.AddControllers(options => options.Filters.Add(typeof(ValidationFilters)));
 
