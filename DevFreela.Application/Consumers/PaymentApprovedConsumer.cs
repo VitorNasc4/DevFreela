@@ -12,7 +12,7 @@ using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace DevFreela.Application.Commands
+namespace DevFreela.Application.Consumer.Commands
 {
     public class PaymentApprovedConsumer : BackgroundService
     {
@@ -26,8 +26,15 @@ namespace DevFreela.Application.Commands
 
             var factory = new ConnectionFactory
             {
-                HostName = "localhost"
+                HostName = "rabbitmq",
+                UserName = "guest",
+                Password = "guest"
             };
+            // var factory = new ConnectionFactory
+            // {
+            //     HostName = "localhost"
+            // };
+
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();

@@ -28,11 +28,11 @@ namespace DevFreela.Application.Commands.FinishProject
 
             var paymentInfo = new PaymentInfoDTO(request.Id, request.CreditCardNumber, request.Cvv, request.ExpiresAt, request.FullName, project.TotalCost);
 
-            _paymentService.ProcessPayment(paymentInfo);
+            project.SetPaymentPending();
 
             await _projectRepository.SaveChangesAsync();
 
-            project.SetPaymentPending();
+            _paymentService.ProcessPayment(paymentInfo);
 
             return true;
         }

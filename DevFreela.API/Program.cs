@@ -3,6 +3,7 @@ using System.Text;
 using DevFreela.API.Filters;
 using DevFreela.Application.Commands;
 using DevFreela.Application.Commands.CreateProject;
+using DevFreela.Application.Consumer.Commands;
 using DevFreela.Application.Validators;
 using DevFreela.Core.Repositories;
 using DevFreela.Core.Services;
